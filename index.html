@@ -5,34 +5,7 @@
 <head>
   <meta charset="utf-8">
   <title>Deck of Cards</title>
-</head>
-
-<body>
-
   <script>
-
-    // Assignment: Deck of Cards
-    // Create a Card class. A card should have the following functionality:
-
-    // Each Card should have a suit ("Hearts", "Clubs", "Diamonds", "Spades")
-    // Each Card should have a string value (eg, "Ace", "Two", ...., "Queen", "King")
-    // Each Card should have a numerical value (1-13)
-    // Each Card should have a show method (log the card's information to the console)
-
-    // Create a Deck class. A deck should have the following functionality:
-
-    // The Deck should contain the 52 standard Cards
-    // The Deck should be able to shuffle
-    // The Deck should be able to reset
-    // The Deck should be able to deal a random Card
-    // Deal should return the Card that was dealt and remove it from the Deck
-
-    // Now create a Player class. A Player should have the following functionality:
-
-    // The Player should have a name
-    // The Player should have a hand (an array of cards taken from a Deck)
-    // The Player should be able to take a Card (use the deck.deal method)
-    // The Player should be able to discard a Card
 
     class Card {
       constructor(suit, strValue, numValue) {
@@ -48,22 +21,17 @@
 
     class Deck {
       constructor(suits, strValues, numValues) {
-        this.deck = []
-        //console.log(this.deck)
         this.reset();
-        //console.log(this.deck)
       }
 
       shuffle() {
         var m = this.deck.length, t, i;
-        //console.log(this.deck)
         while (m) {
           i = Math.floor(Math.random() * m--);
           t = this.deck[m];
           this.deck[m] = this.deck[i];
           this.deck[i] = t;
         }
-        //console.log(this.deck)
         return this;
       }
 
@@ -75,7 +43,35 @@
             this.deck.push(newCard);
           }
         }
-        //console.log(this.deck)
+        return this;
+      }
+
+      deal() {
+        var idx = Math.floor(Math.random() * (this.deck.length - 0));
+        var dealtCard = this.deck.splice(idx, 1);
+        return dealtCard;
+      }
+    }
+
+    class Person {
+      constructor(name, deck, numCards) {
+        this.name = name;
+        this.hand = [];
+
+        for (let i = 1; i <= numCards; i++) {
+          let dealtCard = deck.deal();
+          this.hand.push(dealtCard);
+        }
+      }
+
+      takeCard(deck) {
+        let takenCard = deck.deal();
+        this.hand.push(takenCard);
+        return this;
+      }
+
+      discard(idx) {
+        this.hand.splice(idx, 1);
         return this;
       }
     }
@@ -87,14 +83,11 @@
     for (let i = 1; i <= strValues.length; i++) {
       numValues.push(i);
     }
-
-    let newDeck = new Deck(suits, strValues, numValues);
-    newDeck.shuffle();
-    console.log(newDeck);
-    newDeck.reset();
-    console.log(newDeck);
-
+    
   </script>
+</head>
+
+<body>
 
 </body>
 
